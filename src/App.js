@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './css/pure-min.css';
 import './css/side-menu.css';
-import $ from'jquery';
+import $ from 'jquery';
+import InputCustomizado from "./components/InputCustomizado";
+import SubmitButton from "./components/SubmitButton";
 
 class App extends Component {
 
@@ -34,8 +36,8 @@ class App extends Component {
       dataType: "json",
       data: JSON.stringify({nome: this.state.nome, email: this.state.email, senha: this.state.senha}),
       success: function (resposta) {
-        console.log("Enviado com sucesso");
-      },
+        this.setState({lista: resposta});
+      }.bind(this),
       error: function (resposta) {
         console.log(resposta);
       }
@@ -43,6 +45,7 @@ class App extends Component {
   }
 
   setNome(e) {
+    console.log("setNome(" + e.target.value + ")")
     this.setState({nome: e.target.value});
   }
 
@@ -81,22 +84,10 @@ class App extends Component {
             <div className="content" id="content">
               <div className="pure-form pure-form-aligned">
                 <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="post">
-                  <div className="pure-control-group">
-                    <label htmlFor="nome">Nome</label> 
-                    <input id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setNome} />                  
-                  </div>
-                  <div className="pure-control-group">
-                    <label htmlFor="email">Email</label> 
-                    <input id="email" type="email" name="email" value={this.state.email} onChange={this.setEmail} />                  
-                  </div>
-                  <div className="pure-control-group">
-                    <label htmlFor="senha">Senha</label> 
-                    <input id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha} />                                      
-                  </div>
-                  <div className="pure-control-group">                                  
-                    <label></label> 
-                    <button type="submit" className="pure-button pure-button-primary">Gravar</button>                                    
-                  </div>
+                  <InputCustomizado label="Nome" id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setNome} />
+                  <InputCustomizado label="Email" id="email" type="email" name="email" value={this.state.email} onChange={this.setEmail} />
+                  <InputCustomizado label="Senha" id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha} />                 
+                  <SubmitButton />
                 </form>             
 
               </div>  
