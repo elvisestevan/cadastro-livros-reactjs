@@ -27,11 +27,15 @@ class FormularioAutor extends Component {
           data: JSON.stringify({nome: this.state.nome, email: this.state.email, senha: this.state.senha}),
           success: function (resposta) {
             PubSub.publish("atualiza-lista-autores", resposta);
-          },
+            this.setState({nome: "", email: "", senha: ""});
+          }.bind(this),
           error: function (resposta) {
             if (resposta.status === 400) {
                 new TratadorErros().publicaErros(resposta.responseJSON);
             }
+          },
+          beforeSend: function() {
+              PubSub.publish("limpa-erros", {});
           }
         })
       }
@@ -65,6 +69,36 @@ class FormularioAutor extends Component {
 }
 
 class TabelaAutores extends Component {
+    
+    render() {
+        return (
+            <div>            
+                <table className="pure-table">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                        this.props.lista.map(function (autor) {
+                            return (
+                                <tr key={autor.id}>
+                                    <td>{autor.nome}</td>
+                                    <td>{autor.email}</td>
+                                </tr>
+                            );
+                        })
+                    }
+                  </tbody>
+                </table> 
+            </div> 
+        );
+    }
+}
+
+export default class AutorBox extends Component {
 
     constructor() {
         super();
@@ -87,41 +121,9 @@ class TabelaAutores extends Component {
 
     render() {
         return (
-            <div>            
-                <table className="pure-table">
-                  <thead>
-                    <tr>
-                      <th>Nome</th>
-                      <th>email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                        this.state.lista.map(function (autor) {
-                            return (
-                                <tr key={autor.id}>
-                                    <td>{autor.nome}</td>
-                                    <td>{autor.email}</td>
-                                </tr>
-                            );
-                        })
-                    }
-                  </tbody>
-                </table> 
-            </div> 
-        );
-    }
-}
-
-export default class AutorBox extends Component {
-
-    
-
-    render() {
-        return (
             <div className="content" id="content">
                 <FormularioAutor />
-                <TabelaAutores />
+                <TabelaAutores lista={this.state.lista} />
             </div>
         );
     }
