@@ -54,16 +54,17 @@ class FormularioAutor extends Component {
       }
 
     render() {
-        return (
-            <div className="pure-form pure-form-aligned">
-            <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="post">
-                <InputCustomizado label="Nome" id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setNome} />
-                <InputCustomizado label="Email" id="email" type="email" name="email" value={this.state.email} onChange={this.setEmail} />
-                <InputCustomizado label="Senha" id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha} />                 
-                <SubmitButton />
-            </form>             
-
+        return (     
+            
+            <div className="pure-form pure-form-aligned">                    
+                <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="post">
+                    <InputCustomizado label="Nome" id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setNome} />
+                    <InputCustomizado label="Email" id="email" type="email" name="email" value={this.state.email} onChange={this.setEmail} />
+                    <InputCustomizado label="Senha" id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha} />                 
+                    <SubmitButton />
+                </form>             
             </div>  
+            
         );
     }
 }
@@ -121,9 +122,14 @@ export default class AutorBox extends Component {
 
     render() {
         return (
-            <div className="content" id="content">
-                <FormularioAutor />
-                <TabelaAutores lista={this.state.lista} />
+            <div id="main">
+                <div className="header">
+                    <h1>Cadastro de Autores</h1>
+                </div>
+                <div className="content" id="content">
+                    <FormularioAutor />
+                    <TabelaAutores lista={this.state.lista} />
+                </div>
             </div>
         );
     }
