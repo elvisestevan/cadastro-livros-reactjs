@@ -9,11 +9,12 @@ class FormularioAutor extends Component {
 
     constructor() {
         super();
+        this.state = {lista: []};
         this.enviaForm = this.enviaForm.bind(this);
         this.setNome = this.setNome.bind(this);
         this.setEmail = this.setEmail.bind(this);
         this.setSenha = this.setSenha.bind(this);        
-        this.state = {lista: []};
+        
     }
 
     enviaForm(e) {
@@ -41,7 +42,6 @@ class FormularioAutor extends Component {
       }
     
       setNome(e) {
-        console.log("setNome(" + e.target.value + ")")
         this.setState({nome: e.target.value});
       }
     
