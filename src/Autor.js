@@ -10,11 +10,7 @@ class FormularioAutor extends Component {
     constructor() {
         super();
         this.state = {lista: []};
-        this.enviaForm = this.enviaForm.bind(this);
-        this.setNome = this.setNome.bind(this);
-        this.setEmail = this.setEmail.bind(this);
-        this.setSenha = this.setSenha.bind(this);        
-        
+        this.enviaForm = this.enviaForm.bind(this);        
     }
 
     enviaForm(e) {
@@ -41,26 +37,20 @@ class FormularioAutor extends Component {
         })
       }
     
-      setNome(e) {
-        this.setState({nome: e.target.value});
-      }
-    
-      setEmail(e) {
-        this.setState({email: e.target.value});
-      }
-    
-      setSenha(e) {
-        this.setState({senha: e.target.value});
-      }
+    setField(nomeInput, e) {
+        var field = {};
+        field[nomeInput] = e.target.value;
+        this.setState(field);
+    }
 
     render() {
         return (     
             
             <div className="pure-form pure-form-aligned">                    
                 <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="post">
-                    <InputCustomizado label="Nome" id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setNome} />
-                    <InputCustomizado label="Email" id="email" type="email" name="email" value={this.state.email} onChange={this.setEmail} />
-                    <InputCustomizado label="Senha" id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha} />                 
+                    <InputCustomizado label="Nome" id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setField.bind(this, "nome")} />
+                    <InputCustomizado label="Email" id="email" type="email" name="email" value={this.state.email} onChange={this.setField.bind(this, "email")} />
+                    <InputCustomizado label="Senha" id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setField.bind(this, "senha")} />                 
                     <SubmitButton />
                 </form>             
             </div>  
